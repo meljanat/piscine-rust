@@ -1,8 +1,8 @@
-pub struct Student {
+pub struct Student (
     pub id: u32,
     pub first_name: String,
     pub last_name: String,
-}
+);
 
 pub fn id(student: &Student) -> u32 {
     student.id
