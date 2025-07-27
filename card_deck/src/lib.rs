@@ -2,9 +2,9 @@ use rand::prelude::*;
 
 #[derive(PartialEq, Debug)]
 pub enum Suit {
-    Hearts,
-    Diamonds,
-    Clubs,
+    Heart,
+    Diamond,
+    Club,
     Spade,
 }
 
@@ -26,9 +26,9 @@ impl Suit {
 
     pub fn translate(value: u8) -> Suit {
         match value {
-            0 => Suit::Hearts,
-            1 => Suit::Diamonds,
-            2 => Suit::Clubs,
+            0 => Suit::Heart,
+            1 => Suit::Diamond,
+            2 => Suit::Club,
             3 => Suit::Spade,
             _ => unreachable!(),
         }
