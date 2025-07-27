@@ -6,7 +6,7 @@ pub fn capitalize_first(input: &str) -> String {
 }
 
 pub fn title_case(input: &str) -> String {
-    input.split_whitespace()
+    input.split(" ")
         .map(|word| capitalize_first(word))
         .collect::<Vec<String>>()
         .join(" ")
