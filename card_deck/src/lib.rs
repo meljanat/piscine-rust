@@ -30,7 +30,6 @@ impl Suit {
             1 => Suit::Diamond,
             2 => Suit::Club,
             3 => Suit::Spade,
-            _ => unreachable!(),
         }
     }
 }
@@ -49,7 +48,6 @@ impl Rank {
             11 => Rank::Jack,
             12 => Rank::Queen,
             13 => Rank::King,
-            _ => unreachable!(),
         }
     }
 }
