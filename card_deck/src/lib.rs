@@ -37,7 +37,7 @@ impl Suit {
             1 => Suit::Diamonds,
             2 => Suit::Clubs,
             3 => Suit::Spades,
-            _ => panic!("Invalid suit value"),
+            _ => unreachable!(),
         }
     }
 }
@@ -65,7 +65,7 @@ impl Rank {
             10 => Rank::Queen,
             11 => Rank::King,
             12 => Rank::Ace,
-            _ => panic!("Invalid rank value"),
+            _ => unreachable!(),
         }
     }
 }
