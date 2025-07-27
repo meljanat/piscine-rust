@@ -1,4 +1,7 @@
 pub fn capitalize_first(input: &str) -> String {
+    if input.is_empty() {
+        return String::new();
+    }
     input[..1].to_uppercase() + &input[1..]
 }
 
