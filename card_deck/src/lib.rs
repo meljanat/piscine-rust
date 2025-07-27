@@ -38,7 +38,7 @@ impl Rank {
     pub fn random() -> Rank {
         use rand::prelude::*;
         let mut rng = rand::rng();
-        let value: u8 = rng.random_range(0..13);
+        let value: u8 = rng.random_range(1..14);
         Rank::translate(value)
     }
 
