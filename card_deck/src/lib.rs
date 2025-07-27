@@ -1,5 +1,3 @@
-use rand::prelude::*;
-
 pub enum Suit {
     Hearts,
     Diamonds,
@@ -25,7 +23,7 @@ pub enum Rank {
 
 impl Suit {
     pub fn random() -> Suit {
-        use rand::Rng;
+        use rand::prelude::*;
         let mut rng = rand::thread_rng();
         let value: u8 = rng.gen_range(0..4);
         Suit::translate(value)
@@ -43,7 +41,7 @@ impl Suit {
 
 impl Rank {
     pub fn random() -> Rank {
-        use rand::Rng;
+        use rand::prelude::*;
         let mut rng = rand::thread_rng();
         let value: u8 = rng.gen_range(0..13);
         Rank::translate(value)
