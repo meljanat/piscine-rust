@@ -5,7 +5,7 @@ pub enum Suit {
     Hearts,
     Diamonds,
     Clubs,
-    Spades,
+    Spade,
 }
 
 #[derive(PartialEq, Debug)]
@@ -29,7 +29,7 @@ impl Suit {
             0 => Suit::Hearts,
             1 => Suit::Diamonds,
             2 => Suit::Clubs,
-            3 => Suit::Spades,
+            3 => Suit::Spade,
             _ => unreachable!(),
         }
     }
@@ -61,5 +61,5 @@ pub struct Card {
 }
 
 pub fn winner_card(card: &Card) -> bool {
-    return card.suit == Suit::Spades && card.rank == Rank::Ace;
+    return card.suit == Suit::Spade && card.rank == Rank::Ace;
 }
