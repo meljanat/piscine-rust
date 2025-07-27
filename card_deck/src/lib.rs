@@ -20,16 +20,17 @@ pub enum Rank {
 impl Suit {
     pub fn random() -> Suit {
         let mut rng = rand::thread_rng();
-        let value: u8 = rng.gen_range(0..=3);
+        let value: u8 = rng.gen_range(1..=4);
         Suit::translate(value)
     }
 
     pub fn translate(value: u8) -> Suit {
         match value {
-            0 => Suit::Heart,
-            1 => Suit::Diamond,
-            2 => Suit::Club,
-            3 => Suit::Spade,
+            1 => Suit::Heart,
+            2 => Suit::Diamond,
+            3 => Suit::Club,
+            4 => Suit::Spade,
+            _ => unreachable!(),
         }
     }
 }
@@ -48,6 +49,7 @@ impl Rank {
             11 => Rank::Jack,
             12 => Rank::Queen,
             13 => Rank::King,
+            _ => unreachable!(),
         }
     }
 }
