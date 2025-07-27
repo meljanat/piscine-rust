@@ -1,3 +1,4 @@
+#[derive(PartialEq, Debug)]
 pub enum Suit {
     Hearts,
     Diamonds,
@@ -5,6 +6,7 @@ pub enum Suit {
     Spades,
 }
 
+#[derive(PartialEq, Debug)]
 pub enum Rank {
     Two,
     Three,
@@ -24,8 +26,8 @@ pub enum Rank {
 impl Suit {
     pub fn random() -> Suit {
         use rand::prelude::*;
-        let mut rng = rand::thread_rng();
-        let value: u8 = rng.gen_range(0..4);
+        let mut rng = rand::rng();
+        let value: u8 = rng.random_range(0..4);
         Suit::translate(value)
     }
 
@@ -35,6 +37,7 @@ impl Suit {
             1 => Suit::Diamonds,
             2 => Suit::Clubs,
             3 => Suit::Spades,
+            _ => panic!("Invalid suit value"),
         }
     }
 }
@@ -42,8 +45,8 @@ impl Suit {
 impl Rank {
     pub fn random() -> Rank {
         use rand::prelude::*;
-        let mut rng = rand::thread_rng();
-        let value: u8 = rng.gen_range(0..13);
+        let mut rng = rand::rng();
+        let value: u8 = rng.random_range(0..13);
         Rank::translate(value)
     }
 
@@ -62,15 +65,17 @@ impl Rank {
             10 => Rank::Queen,
             11 => Rank::King,
             12 => Rank::Ace,
+            _ => panic!("Invalid rank value"),
         }
     }
 }
 
+#[derive(PartialEq, Debug)]
 pub struct Card {
     pub suit: Suit,
     pub rank: Rank,
 }
 
 pub fn winner_card(card: &Card) -> bool {
-    return (card.suit == Suit::Spades && card.rank == Rank::Ace);
+    return card.suit == Suit::Spades && card.rank == Rank::Ace;
 }
