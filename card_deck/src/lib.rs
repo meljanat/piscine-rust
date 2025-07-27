@@ -8,19 +8,11 @@ pub enum Suit {
 
 #[derive(PartialEq, Debug)]
 pub enum Rank {
-    Two,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten,
+    Ace,
+    Number(u8),
     Jack,
     Queen,
     King,
-    Ace,
 }
 
 impl Suit {
@@ -52,19 +44,11 @@ impl Rank {
 
     pub fn translate(value: u8) -> Rank {
         match value {
-            0 => Rank::Two,
-            1 => Rank::Three,
-            2 => Rank::Four,
-            3 => Rank::Five,
-            4 => Rank::Six,
-            5 => Rank::Seven,
-            6 => Rank::Eight,
-            7 => Rank::Nine,
-            8 => Rank::Ten,
-            9 => Rank::Jack,
-            10 => Rank::Queen,
-            11 => Rank::King,
-            12 => Rank::Ace,
+            1 => Rank::Ace,
+            2..=10 => Rank::Number(value),
+            11 => Rank::Jack,
+            12 => Rank::Queen,
+            13 => Rank::King,
             _ => unreachable!(),
         }
     }
