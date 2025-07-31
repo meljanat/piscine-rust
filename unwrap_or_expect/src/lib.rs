@@ -1,5 +1,6 @@
 use core::panic;
 
+#[derive(PartialEq)]
 pub enum Security {
     Unknown,
     Message,
@@ -23,15 +24,9 @@ pub fn fetch_data(server: Result<&str, &str>, security_level: Security) -> Strin
             Security::Message => {
                 panic!("ERROR: program stops");
             }
-            Security::Warning => {
-               "WARNING: check the server".to_string()
-            }
-            Security::NotFound => {
-                "Not found: {err}".to_string()
-            }
-            Security::UnexpectedUrl => {
-                err.to_string()
-            }
+            Security::Warning => "WARNING: check the server".to_string(),
+            Security::NotFound => "Not found: {err}".to_string(),
+            Security::UnexpectedUrl => err.to_string(),
         },
     }
 }
