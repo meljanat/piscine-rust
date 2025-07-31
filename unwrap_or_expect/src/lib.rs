@@ -13,7 +13,7 @@ pub fn fetch_data(server: Result<&str, &str>, security_level: Security) -> Strin
     match server {
         Ok(data) => {
             if security_level == Security::UnexpectedUrl {
-                panic!("{data}");
+                panic!("{}", data);
             }
             data.to_string()
         }
@@ -25,7 +25,7 @@ pub fn fetch_data(server: Result<&str, &str>, security_level: Security) -> Strin
                 panic!("ERROR: program stops");
             }
             Security::Warning => "WARNING: check the server".to_string(),
-            Security::NotFound => "Not found: {err}".to_string(),
+            Security::NotFound => format!("Not found: {}", err),
             Security::UnexpectedUrl => err.to_string(),
         },
     }
