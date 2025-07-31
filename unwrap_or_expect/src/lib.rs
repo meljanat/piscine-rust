@@ -1,5 +1,3 @@
-use core::panic;
-
 #[derive(PartialEq)]
 pub enum Security {
     Unknown,
