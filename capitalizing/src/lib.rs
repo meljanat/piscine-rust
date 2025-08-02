@@ -6,14 +6,14 @@ pub fn capitalize_first(input: &str) -> String {
 }
 
 pub fn title_case(input: &str) -> String {
-    let mut toCap = true;
+    let mut to_cap = true;
     input.chars()
         .map(|c| {
             if c.is_whitespace() {
-                toCap = true;
+                to_cap = true;
                 c.to_string()
-            } else if toCap {
-                toCap = false;
+            } else if to_cap {
+                to_cap = false;
                 c.to_uppercase().to_string()
             } else {
                 c.to_string()
