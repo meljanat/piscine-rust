@@ -3,7 +3,7 @@ pub fn talking(text: &str) -> &str {
         "There is no need to yell, calm down!"
     } else if text.chars().all(|c| c.is_ascii_uppercase() || c == '?') {
         "Quiet, I am thinking!"
-    } else if text.chars().some(|c| c.is_ascii_lowercase() || c == '?') {
+    } else if text.chars().any(|c| c.is_ascii_lowercase() || c == '?') {
         "Sure."
     } else if text.is_empty() {
         "Just say something!"
