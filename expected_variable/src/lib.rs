@@ -2,6 +2,10 @@ use convert_case::{Case, Casing};
 use edit_distance::edit_distance;
 
 pub fn expected_variable(compared: &str, expected: &str) -> Option<String> {
+    if !compared.is_case(Case::Camel) && !compared.is_case(Case::Snake) {
+        return None;
+    }
+
     let a = compared.to_lowercase();
     let b = expected.to_lowercase();
 
