@@ -1,4 +1,4 @@
-pub mod mall;
+mod mall;
 pub use mall::*;
 use std::collections::HashMap;
 
@@ -33,28 +33,40 @@ pub fn highest_paid_employee(mall: &Mall) -> Vec<(&str, Employee)> {
 }
 
 pub fn nbr_of_employees(mall: &Mall) -> usize {
-    mall.floors
-        .values()
-        .flat_map(|floor| floor.stores.values())
-        .map(|store| store.employees.len())
-        .sum()
+    let mut employee_count = mall.guards.len();
+
+    for (_, floor) in &mall.floors {
+        for (_, store) in &floor.stores {
+            employee_count += store.employees.len();
+        }
+    }
+
+    employee_count
 }
 
-pub fn check_for_securities(mall: &mut Mall, mut guard_pool: HashMap<String, Guard>) {
-    let total_area: u64 = mall
-        .floors
-        .values()
-        .flat_map(|floor| floor.stores.values())
-        .map(|store| store.square_meters)
-        .sum();
+pub fn check_for_securities(mall: &mut Mall, available_guards: HashMap<String, Guard>) {
+    let mut total_floor_area = 0;
 
-    let required_guards = ((total_area + 199) / 200) as usize;
+    for (_, floor) in &mall.floors {
+        total_floor_area += floor.size_limit;
+    }
 
-    for (name, guard) in guard_pool.drain() {
-        if mall.guards.len() >= required_guards {
+    let required_guards = total_floor_area / 200;
+    let current_guards = mall.guards.len() as u64;
+
+    if required_guards <= current_guards {
+        return;
+    }
+
+    let mut guards_needed = required_guards - current_guards;
+
+    for (guard_name, guard) in available_guards {
+        if guards_needed == 0 {
             break;
         }
-        mall.hire_guard(name, guard);
+
+        mall.hire_guard(&guard_name, guard);
+        guards_needed -= 1;
     }
 }
 
