@@ -3,34 +3,25 @@ pub use mall::*;
 use std::collections::HashMap;
 
 pub fn biggest_store(mall: &Mall) -> (String, Store) {
-    let mut biggest: Option<(String, Store)> = None;
-
-    for floor in mall.floors.values() {
-        for (store_name, store) in &floor.stores {
-            if let Some((_, ref current_biggest)) = biggest {
-                if store.square_meters > current_biggest.square_meters {
-                    biggest = Some((store_name.clone(), store.clone()));
-                }
-            } else {
-                biggest = Some((store_name.clone(), store.clone()));
-            }
-        }
-    }
-
-    biggest.unwrap()
+    mall.floors
+        .values()
+        .flat_map(|floor| floor.stores.iter())
+        .max_by_key(|(_, store)| store.square_meters)
+        .map(|(name, store)| (name.clone(), store.clone()))
+        .unwrap()
 }
 
 pub fn highest_paid_employee(mall: &Mall) -> Vec<(String, Employee)> {
-    let mut highest_salary = 0.0;
     let mut result = vec![];
+    let mut max_salary = 0.0;
 
     for floor in mall.floors.values() {
         for store in floor.stores.values() {
             for (name, employee) in &store.employees {
-                if employee.salary > highest_salary {
-                    highest_salary = employee.salary;
+                if employee.salary > max_salary {
+                    max_salary = employee.salary;
                     result = vec![(name.clone(), *employee)];
-                } else if (employee.salary - highest_salary).abs() < f64::EPSILON {
+                } else if (employee.salary - max_salary).abs() < f64::EPSILON {
                     result.push((name.clone(), *employee));
                 }
             }
@@ -41,28 +32,25 @@ pub fn highest_paid_employee(mall: &Mall) -> Vec<(String, Employee)> {
 }
 
 pub fn nbr_of_employees(mall: &Mall) -> usize {
-    let mut count = 0;
-
-    for floor in mall.floors.values() {
-        for store in floor.stores.values() {
-            count += store.employees.len();
-        }
-    }
-
-    count
+    mall.floors
+        .values()
+        .flat_map(|floor| floor.stores.values())
+        .map(|store| store.employees.len())
+        .sum()
 }
 
 pub fn check_for_securities(mall: &mut Mall, mut guard_pool: HashMap<String, Guard>) {
-    let total_size: u64 = mall
+    let total_area: u64 = mall
         .floors
         .values()
-        .map(|floor| floor.stores.values().map(|s| s.square_meters).sum::<u64>())
+        .flat_map(|floor| floor.stores.values())
+        .map(|store| store.square_meters)
         .sum();
 
-    let required = (total_size + 199) / 200;
+    let required_guards = ((total_area + 199) / 200) as usize;
 
     for (name, guard) in guard_pool.drain() {
-        if mall.guards.len() >= required as usize {
+        if mall.guards.len() >= required_guards {
             break;
         }
         mall.hire_guard(name, guard);
