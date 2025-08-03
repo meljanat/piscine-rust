@@ -1,8 +1,8 @@
-use case::CaseExt;
+use convert_case::{Case, Casing};
 use edit_distance::edit_distance;
 
 pub fn expected_variable(compared: &str, expected: &str) -> Option<String> {
-    if !compared.is_camel_case() && !compared.is_snake_case() {
+    if !compared.is_case(Case::Camel) && !compared.is_case(Case::Snake) {
         return None;
     }
 
