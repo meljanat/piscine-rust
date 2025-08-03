@@ -5,7 +5,7 @@ pub fn expected_variable(compared: &str, expected: &str) -> Option<String> {
     let a = compared.to_lowercase();
     let b = expected.to_lowercase();
 
-    if !compared.is_case(Case::Camel) && !compared.is_case(Case::Snake) {
+    if !a.is_case(Case::Camel) && !a.is_case(Case::Snake) {
         return None;
     }
 
