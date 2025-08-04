@@ -1,25 +1,26 @@
 pub fn scytale_cipher(message: &str, i: usize) -> String {
-    if i == 0 {
-        return String::new();
+    if message.len() == 0 || message.len() == (i as usize){
+        return message.to_string()
     }
-    
-    let len = message.len();
-    let mut padded = message.to_string();
+    let size = (message.len() as f64/i as f64).ceil() as usize;
+    let mut holder : Vec<Vec<char>> = vec![vec![' '; i as usize];size];
+    let mut res : String = String::new();
+    let mut ii: usize = 0;
+    let mut j: usize = 0;
 
-    let rem = len % i;
-    if rem != 0 {
-        padded.extend(std::iter::repeat(' ').take(i - rem));
+    for c in message.chars() {
+        if j == i as usize {
+            j = 0;
+            ii += 1;
+        }
+        holder[ii][j] = c;
+        j += 1;
+
     }
-
-    let rows = padded.len() / i;
-    let chars: Vec<char> = padded.chars().collect();
-    let mut result = String::with_capacity(padded.len());
-
-    for col in 0..i {
-        for row in 0..rows {
-            result.push(chars[row * i + col]);
+    for j in 0..i as usize {
+        for i in 0..size {
+            res.push(holder[i][j])
         }
     }
-
-    result
+    res.trim().to_owned().to_string()
 }
