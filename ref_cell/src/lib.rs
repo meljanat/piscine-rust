@@ -29,8 +29,8 @@ impl Tracker {
         }
     }
 
-    pub fn peek(&mut self, &value: Rc<i32>) {
-        let count = Rc::strong_count(&value);
+    pub fn peek(&mut self, value: &Rc<i32>) {
+        let count = Rc::strong_count(value);
         self.messages.push(format!(
             "Info: This value would use {}% of your quota",
             (count as f32 / self.max as f32 * 100.0).round()
