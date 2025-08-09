@@ -1,9 +1,9 @@
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 
 pub struct Tracker {
     pub messages: RefCell<Vec<String>>,
-    pub value: i32,
+    pub value: Cell<i32>,
     pub max: i32,
 }
 
@@ -11,7 +11,7 @@ impl Tracker {
     pub fn new(max: i32) -> Self {
         Self {
             messages: RefCell::new(Vec::new()),
-            value: 0,
+            value: Cell::new(0),
             max,
         }
     }
@@ -29,9 +29,9 @@ impl Tracker {
                 "Warning: You have used up over {}% of your quota!",
                 percent
             ));
-            self.value = count;
+            self.value.set(count);
         } else {
-            self.value = count;
+            self.value.set(count);
         }
     }
 
