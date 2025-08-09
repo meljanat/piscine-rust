@@ -17,25 +17,30 @@ impl Tracker {
     }
 
     pub fn set_value(&mut self, value: &Rc<i32>) {
-        if **value > self.max {
+        let count = Rc::strong_count(value) as i32;
+
+        if count > self.max {
             self.messages
                 .borrow_mut()
                 .push("Error: You can't go over your quota!".to_string());
-        } else if **value > (self.max as f32 * 0.7) as i32 {
+        } else if count > (self.max as f32 * 0.7) as i32 {
+            let percent = ((count as f32 / self.max as f32) * 100.0).round();
             self.messages.borrow_mut().push(format!(
                 "Warning: You have used up over {}% of your quota!",
-                (**value as f32 / self.max as f32 * 100.0).round()
+                percent
             ));
+            self.value = count;
         } else {
-            self.value = **value;
+            self.value = count;
         }
     }
 
     pub fn peek(&mut self, value: &Rc<i32>) {
         let count = Rc::strong_count(value);
+        let percent = ((count as f32 / self.max as f32) * 100.0).round();
         self.messages.borrow_mut().push(format!(
             "Info: This value would use {}% of your quota",
-            (count as f32 / self.max as f32 * 100.0).round()
+            percent
         ));
     }
 }
