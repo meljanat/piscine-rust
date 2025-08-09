@@ -1,7 +1,8 @@
+use std::cell::RefCell;
 use std::rc::Rc;
 
 pub struct Tracker {
-    pub messages: Vec<String>,
+    pub messages: RefCell<Vec<String>>,
     pub value: i32,
     pub max: i32,
 }
@@ -9,7 +10,7 @@ pub struct Tracker {
 impl Tracker {
     pub fn new(max: i32) -> Self {
         Self {
-            messages: Vec::new(),
+            messages: RefCell::new(Vec::new()),
             value: 0,
             max,
         }
