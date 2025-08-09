@@ -24,7 +24,7 @@ impl Tracker {
                 .borrow_mut()
                 .push("Error: You can't go over your quota!".to_string());
         } else if count > (self.max as f32 * 0.7) as i32 {
-            let percent = ((count as f32 / self.max as f32) * 100.0).round();
+            let percent = ((count as f32 / self.max as f32) * 100.0) as i32;
             self.messages.borrow_mut().push(format!(
                 "Warning: You have used up over {}% of your quota!",
                 percent
@@ -37,7 +37,7 @@ impl Tracker {
 
     pub fn peek(&self, value: &Rc<i32>) {
         let count = Rc::strong_count(value);
-        let percent = ((count as f32 / self.max as f32) * 100.0).round();
+        let percent = ((count as f32 / self.max as f32) * 100.0) as i32;
         self.messages.borrow_mut().push(format!(
             "Info: This value would use {}% of your quota",
             percent
