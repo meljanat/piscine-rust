@@ -19,9 +19,10 @@ impl Tracker {
     pub fn set_value(&mut self, value: &Rc<i32>) {
         if **value > self.max {
             self.messages
+                .borrow_mut()
                 .push("Error: You can't go over your quota!".to_string());
         } else if **value > (self.max as f32 * 0.7) as i32 {
-            self.messages.push(format!(
+            self.messages.borrow_mut().push(format!(
                 "Warning: You have used up over {}% of your quota!",
                 (**value as f32 / self.max as f32 * 100.0).round()
             ));
@@ -32,7 +33,7 @@ impl Tracker {
 
     pub fn peek(&mut self, value: &Rc<i32>) {
         let count = Rc::strong_count(value);
-        self.messages.push(format!(
+        self.messages.borrow_mut().push(format!(
             "Info: This value would use {}% of your quota",
             (count as f32 / self.max as f32 * 100.0).round()
         ));
