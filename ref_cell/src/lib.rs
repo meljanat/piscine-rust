@@ -16,7 +16,7 @@ impl Tracker {
         }
     }
 
-    pub fn set_value(&mut self, value: &Rc<i32>) {
+    pub fn set_value(&self, value: &Rc<i32>) {
         let count = Rc::strong_count(value) as i32;
 
         if count > self.max {
