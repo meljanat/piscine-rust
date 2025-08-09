@@ -35,7 +35,7 @@ impl Tracker {
         }
     }
 
-    pub fn peek(&mut self, value: &Rc<i32>) {
+    pub fn peek(&self, value: &Rc<i32>) {
         let count = Rc::strong_count(value);
         let percent = ((count as f32 / self.max as f32) * 100.0).round();
         self.messages.borrow_mut().push(format!(
