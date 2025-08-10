@@ -4,7 +4,7 @@ impl fmt::Display for Player {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         writeln!(f, "{}", self.name)?;
         writeln!(f, "Strength: {}, Score: {}, Money: {}", self.strength, self.score, self.money)?;
-        writeln!(f, "Weapons: {:?}\n", self.weapons)
+        write!(f, "Weapons: {:?}", self.weapons)
     }
 }
 
