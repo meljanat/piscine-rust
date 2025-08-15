@@ -35,8 +35,8 @@ impl fmt::Display for Notification {
         let reset = "\x1b[0m";
         write!(
             f,
-            "{}{} (Size: {}, Position: {:?}){}",
-            color, self.content, self.size, self.position, reset
+            "({}, {}, {}{}{})",
+            self.position, self.size, color, self.content, reset
         )
     }
 }
