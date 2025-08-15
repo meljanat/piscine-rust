@@ -33,7 +33,23 @@ impl fmt::Display for Notification {
             self.content
                 .clone()
                 .truecolor(self.color.0, self.color.1, self.color.2);
-        write!(f, "({}, {}, {})", self.position, self.size, colored_content)
+        write!(
+            f,
+            "({}, {}, {})",
+            self.position.to_string(),
+            self.size,
+            colored_content
+        )
+    }
+}
+
+impl Position {
+    pub fn to_string(&self) -> &str {
+        match self {
+            Position::Top => "Top",
+            Position::Bottom => "Bottom",
+            Position::Center => "Center",
+        }
     }
 }
 
