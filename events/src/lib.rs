@@ -1,5 +1,6 @@
 use chrono::Duration;
 use colored::*;
+use std::fmt;
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Position {
@@ -24,38 +25,31 @@ pub enum Event<'a> {
     Holiday,
 }
 
-use std::fmt;
+use Event::*;
 
 impl fmt::Display for Notification {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let color = format!(
-            "\x1b[38;2;{};{};{}m",
-            self.color.0, self.color.1, self.color.2
-        );
-        let reset = "\x1b[0m";
-        write!(
-            f,
-            "({}, {}, {}{}{})",
-            self.position, self.size, color, self.content, reset
-        )
+        let colored_content =
+            self.content
+                .clone()
+                .truecolor(self.color.0, self.color.1, self.color.2);
+        write!(f, "({}, {}, {})", self.position, self.size, colored_content)
     }
 }
 
-use Event::*;
-
-impl Event {
+impl<'a> Event<'a> {
     pub fn notify(&self) -> Notification {
         match self {
             Remainder(content) => Notification {
                 size: 50,
                 color: (50, 50, 50),
                 position: Position::Bottom,
-                content: content,
+                content: content.to_string(),
             },
             Registration(duration) => {
-                let hours = duration.as_hours();
-                let minutes = duration.as_minutes() % 60;
-                let seconds = duration.as_secs() % 60;
+                let hours = duration.num_hours();
+                let minutes = duration.num_minutes() % 60;
+                let seconds = duration.num_seconds() % 60;
                 Notification {
                     size: 30,
                     color: (255, 2, 22),
@@ -69,7 +63,7 @@ impl Event {
                 size: 100,
                 color: (200, 200, 3),
                 position: Position::Center,
-                content: content,
+                content: content.to_string(),
             },
             Holiday => Notification {
                 size: 25,
