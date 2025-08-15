@@ -40,6 +40,6 @@ impl<'a> Vehicle<'a> for Car<'a> {
     }
 }
 
-fn all_models<'a>(list: Vec<&'a dyn Vehicle<'a>>) -> Vec<&'a str> {
+pub fn all_models<'a>(list: Vec<&'a dyn Vehicle<'a>>) -> Vec<&'a str> {
     list.iter().map(|v| v.model()).collect()
 }
