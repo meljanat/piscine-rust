@@ -1,8 +1,9 @@
 use lalgebra_scalar::Scalar;
 use matrix::Matrix;
+use std::ops::{Add, Sub};
 
-impl Add for Matrix {
-    fn add(&self, other: &Self) -> Option<Matrix> {
+impl Add for Matrix<T> {
+    fn add(&self, other: &Self) -> Option<Matrix<T>> {
         if self.0.len() != other.0.len() || self.0[0].len() != other.0[0].len() {
             return None;
         }
@@ -17,8 +18,8 @@ impl Add for Matrix {
     }
 }
 
-impl Sub for Matrix {
-    fn sub(&self, other: &Self) -> Option<Matrix> {
+impl Sub for Matrix<T> {
+    fn sub(&self, other: &Self) -> Option<Matrix<T>> {
         if self.0.len() != other.0.len() || self.0[0].len() != other.0[0].len() {
             return None;
         }
