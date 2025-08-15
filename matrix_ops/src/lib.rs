@@ -1,5 +1,5 @@
 use lalgebra_scalar::Scalar;
-use matrix::Matrix;
+pub use matrix::Matrix;
 use std::ops::{Add, Sub};
 
 #[derive(Debug, Clone)]
