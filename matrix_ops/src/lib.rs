@@ -2,8 +2,11 @@ use lalgebra_scalar::Scalar;
 use matrix::Matrix;
 use std::ops::{Add, Sub};
 
-impl<T: Scalar> Add for Matrix<T> {
-    fn add(&self, other: &Self) -> Option<Matrix<T>> {
+pub struct MatrixOps<T>(pub Matrix<T>);
+
+impl<T: Scalar<Item = T>> Add for MatrixOps<T> {
+    type Output = Option<Self>;
+    fn add(&self, other: &Self) -> Option<Self> {
         if self.0.len() != other.0.len() || self.0[0].len() != other.0[0].len() {
             return None;
         }
@@ -18,8 +21,9 @@ impl<T: Scalar> Add for Matrix<T> {
     }
 }
 
-impl<T: Scalar> Sub for Matrix<T> {
-    fn sub(&self, other: &Self) -> Option<Matrix<T>> {
+impl<T: Scalar<Item = T>> Sub for MatrixOps<T> {
+    type Output = Option<Self>;
+    fn sub(&self, other: &Self) -> Option<Self> {
         if self.0.len() != other.0.len() || self.0[0].len() != other.0[0].len() {
             return None;
         }
