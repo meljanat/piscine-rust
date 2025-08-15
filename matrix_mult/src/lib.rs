@@ -1,7 +1,28 @@
 use lalgebra_scalar::Scalar;
 use std::ops::Mul;
 
-impl Matrix<T> {
+#[derive(Debug, Clone, PartialEq)]
+pub struct Matrix<T>(pub Vec<Vec<T>>);
+
+impl<T: Scalar<Item = T>> Matrix<T> {
+    pub fn new() -> Matrix<T> {
+        Matrix(Vec::new())
+    }
+
+    pub fn zero(row: usize, col: usize) -> Matrix<T> {
+        Matrix(vec![vec![T::zero(); col]; row])
+    }
+
+    pub fn identity(n: usize) -> Matrix<T> {
+        let mut mat = Matrix::zero(n, n);
+        for i in 0..n {
+            mat.0[i][i] = T::one();
+        }
+        mat
+    }
+}
+
+impl<T: Scalar<Item = T>> Matrix<T> {
     pub fn number_of_cols(&self) -> usize {
         self.0[0].len()
     }
@@ -29,12 +50,11 @@ impl<T: Scalar<Item = T>> Mul for Matrix<T> {
         let mut result = Matrix::zero(self.number_of_rows(), other.number_of_cols());
         for i in 0..self.number_of_rows() {
             for j in 0..other.number_of_cols() {
-                result.0[i][j] = self
-                    .row(i)
-                    .iter()
-                    .zip(other.col(j).iter())
-                    .map(|(a, b)| *a * *b)
-                    .sum();
+                let mut sum = T::zero();
+                for k in 0..self.number_of_cols() {
+                    sum = sum + self.0[i][k] * other.0[k][j];
+                }
+                result.0[i][j] = sum;
             }
         }
         Some(result)
